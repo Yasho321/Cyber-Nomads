@@ -3,7 +3,7 @@ import Upload from './../models/upload.model.js'
 import { Queue } from "bullmq";
 import "dotenv/config";
 import Invoice from "../models/invoice.model.js";
-
+import { Parser } from "json2csv"
 
 const invoiceQueue = new Queue("invoice", {
   connection: {
@@ -121,5 +121,39 @@ export const getUploadById = async (req , res , next) => {
             }
         )
     }
+
+}
+
+export const exportUpload = async(req , res , next) => {
+
+         try {
+
+            const fieldsQuery = req.query.fields; // "name,email,age"
+            const fields = fieldsQuery ? fieldsQuery.split(",") : ["name", "email", "age", "city", "createdAt"];
+
+            // get data
+            const data = await Upload.findById(req.params.id).populate('invoiceId');
+
+            // Convert to CSV
+            const parser = new Parser({ fields });
+            const csv = parser.parse(data);
+
+            // Set headers to force download
+            const dt = new Date().toISOString().slice(0,10);
+            res.header("Content-Type", "text/csv");
+            res.attachment(`users-${dt}.csv`);
+            return res.send(csv);
+
+         }
+         catch(err) {
+
+          res.status(500).json(
+            {
+                status : "Failed" ,
+                error : err
+            }
+        )
+
+         }
 
 }

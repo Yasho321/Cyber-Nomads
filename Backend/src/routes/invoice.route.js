@@ -5,9 +5,7 @@ import {
   getInvoiceById,
   getRejectedInvoice,
   uploadInvoice,
-
-  getUploadsForHumanReview, 
-
+  getInvoiceForHumanReview, 
   approveItem,
   rejectItem
 
@@ -24,5 +22,6 @@ router.post("/reject/:id", rejectItem);
 router.get("/", getInvoices);
 router.get("/rejected", getRejectedInvoice);
 router.get("/:id", getInvoiceById);
+router.get('/humanreview' , getInvoiceForHumanReview)
 
 export default router;

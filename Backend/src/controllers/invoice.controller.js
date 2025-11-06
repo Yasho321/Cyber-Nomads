@@ -173,3 +173,26 @@ export const exportAllInvoices = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
+export const getInvoiceForHumanReview = async (req , res , next) => {
+
+    try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+    const data = await Invoice.findById({"review.humanReviewNeeded" : true});
+
+    res.status(200).json(
+      {
+        status : "Success" ,
+        data
+      }
+    );
+  } catch (error) {
+    console.error("Error fetching invoice for human review:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+
+}
