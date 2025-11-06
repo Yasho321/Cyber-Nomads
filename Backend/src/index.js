@@ -23,9 +23,7 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/v1/invoices", invoiceRoutes);
-app.use("/api/v1/upload" , uploadRoutes);
-app.use("/api/v1/user" , userRoutes)
+
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -38,7 +36,9 @@ mongoose
   .catch((error) => {
     console.log("Error connecting to MongoDB", error);
   });
-
+app.use("/api/v1/invoices", invoiceRoutes);
+app.use("/api/v1/upload" , uploadRoutes);
+app.use("/api/v1/user" , userRoutes);
 app.get("/api/v1/healthcheck", (req, res) => {
   res.send("Server is running");
 });

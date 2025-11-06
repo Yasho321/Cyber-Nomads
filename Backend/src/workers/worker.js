@@ -649,7 +649,11 @@ export const llmAsJudge = async (imagePath, invoiceData) => {
   const SYSTEM_PROMPT = `
   You are a judge and your task is to decide whether the invoiceData provided is correct extraction of the image
   or not and return Json format provided 
-  Be lineant , don't be too harsh give correctRetrieval false only when some value is wrong or may affect the accuracy
+  - Be lineant , don't be too harsh give correctRetrieval false only when some value is wrong or may affect the accuracy
+  - I repeat if the values are same then don't give correctRetrieval false 
+  - Even if it is not correct think is your reasoning correct for it before giving false
+  - Don't give correctRetrieval false for some bullshit reasons like it's not in the same format as in image(even though value is same) , it has "," instead "." etc
+  - prefer giving correctRetrieval true more than correctRetrieval false
   You should return a bool value if the retrieval is correct or not 
   And also the suggestion if it is not an correct retrieval
   You should only give suggestion if the retrieval is not correct
@@ -671,7 +675,7 @@ export const llmAsJudge = async (imagePath, invoiceData) => {
         content: [
           {
             type: "input_text",
-            text: "Judge the invoice details if it is correctly retrieved from this image and return in JSON format as given in System Prompt",
+            text: "Judge the invoice details if it is correctly retrieved from this image and return in JSON format as given in System Prompt, Be lineant",
           },
           {
             type: "input_image",
