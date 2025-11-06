@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - InvoiceAI</title>
+  <meta name="description" content="Create your InvoiceAI account" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-background text-foreground transition-all duration-300">
+  <!-- Three.js Background -->
+  <div id="three-container" class="fixed inset-0 -z-10 pointer-events-none" style="opacity: 0.6;"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-fast">
+            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <span class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            InvoiceAI
+          </span>
+        </a>
+
+        <div class="flex items-center gap-4">
+          <button id="theme-toggle" class="p-2 rounded-lg hover:bg-muted transition-fast" aria-label="Toggle theme">
+            <svg id="moon-icon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+            <svg id="sun-icon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </button>
+          <a href="index.html" class="px-4 py-2 rounded-lg hover:bg-muted transition-fast">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto max-w-5xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Left side - Benefits -->
+        <div class="hidden lg:block animate-fade-in">
+          <div class="inline-flex items-center justify-center p-3 rounded-xl bg-primary/10 mb-6">
+            <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h1 class="text-4xl font-bold mb-4">Start Your Free Trial</h1>
+          <p class="text-xl text-muted-foreground mb-8">
+            Join thousands of businesses transforming their invoice workflow
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="p-1 rounded-full bg-primary/10">
+                <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <p class="text-lg">No credit card required</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="p-1 rounded-full bg-primary/10">
+                <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <p class="text-lg">14-day free trial</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="p-1 rounded-full bg-primary/10">
+                <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <p class="text-lg">Cancel anytime</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="p-1 rounded-full bg-primary/10">
+                <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <p class="text-lg">Full access to all features</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="p-1 rounded-full bg-primary/10">
+                <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <p class="text-lg">24/7 customer support</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right side - Form -->
+        <div class="animate-fade-in">
+          <div class="text-center lg:hidden mb-8">
+            <div class="inline-flex items-center justify-center p-3 rounded-xl bg-primary/10 mb-4">
+              <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <h1 class="text-4xl font-bold mb-2">Create Account</h1>
+            <p class="text-muted-foreground">Start your free trial today</p>
+          </div>
+
+          <div class="gradient-card rounded-lg border border-border/50 shadow-xl p-6">
+            <div class="mb-6 hidden lg:block">
+              <h2 class="text-2xl font-bold mb-2">Create Account</h2>
+              <p class="text-sm text-muted-foreground">Enter your details to get started</p>
+            </div>
+
+            <form id="signup-form" class="space-y-4">
+              <div class="space-y-2">
+                <label for="name" class="text-sm font-medium">Full Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  required
+                  class="w-full px-3 py-2 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-fast"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label for="email" class="text-sm font-medium">Work Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="name@company.com"
+                  required
+                  class="w-full px-3 py-2 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-fast"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label for="password" class="text-sm font-medium">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  minlength="8"
+                  class="w-full px-3 py-2 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-fast"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label for="confirmPassword" class="text-sm font-medium">Confirm Password</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  minlength="8"
+                  class="w-full px-3 py-2 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-fast"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="w-full px-6 py-3 rounded-lg gradient-primary shadow-glow text-white font-medium group inline-flex items-center justify-center gap-2"
+              >
+                <span id="signup-btn-text">Create Account</span>
+                <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </button>
+            </form>
+
+            <div class="mt-6 text-center">
+              <p class="text-sm text-muted-foreground">
+                Already have an account?
+                <a href="login.html" class="text-primary font-medium hover:text-primary/80 transition-fast ml-1">
+                  Sign in
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <p class="text-center text-sm text-muted-foreground mt-6">
+            By signing up, you agree to our
+            <a href="#" class="text-primary hover:text-primary/80 transition-fast">Terms of Service</a>
+            and
+            <a href="#" class="text-primary hover:text-primary/80 transition-fast">Privacy Policy</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-4 right-4 px-6 py-4 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+    <div class="flex items-center gap-3">
+      <svg id="toast-icon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+      <div>
+        <p id="toast-title" class="font-bold"></p>
+        <p id="toast-description" class="text-sm"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/three-background.js"></script>
+  <script src="js/forms.js"></script>
+</body>
+</html>
