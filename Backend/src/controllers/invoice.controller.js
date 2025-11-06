@@ -2,6 +2,8 @@ import Invoice from "../models/invoice.model.js";
 import { Queue } from "bullmq";
 import "dotenv/config";
 
+const Invoice = require("../models/invoice.js");
+
 const invoiceQueue = new Queue("invoice", {
   connection: {
     host: process.env.REDIS_HOST,
@@ -106,84 +108,37 @@ export const uploadInvoice = async (req, res) => {
 };
 
 
-export const getUploadsForHumanReview = async (req , res , next) => {
-  
-   try {
+export const approveItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await Invoice.findById(id);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+    item.status = "approved";
+    await item.save();
+    res.status(200).json({ message: "Item approved successfully", item });
+  } catch (error) {
+    console.error("Error approving item:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
 
-         const data = await Invoice.find();
-         res.status(200).json(
-          {
-            status : "Success" ,
-            data
-          }
-         )
-
-   }
-   catch(err) {
-
-        res.status(500).json(
-          {
-            status : "Failed" ,
-            error : err
-          }
-        )
-
-   }
-
-}
-
-
-export const UpdateInvoiceById = async (req , res , next) => {
-
-         try {
-
-         const data = await Invoice.findByIdAndUpdate(req.params.id , req.body);
-         res.status(200).json(
-          {
-            status : "Success" ,
-            data ,
-            message : "Invoice Updated Successfully"
-          }
-         )
-
-   }
-   catch(err) {
-
-        res.status(500).json(
-          {
-            status : "Failed" ,
-            error : err
-          }
-        )
-
-   }
-
-}
-
-
-export const getAllRejectedInvoices = async (req , res , next) => {
-  
-   try {
-
-         const data = await Invoice.find( { "reject.rejected" : true } );
-         res.status(200).json(
-          {
-            status : "Success" ,
-            data
-          }
-         )
-
-   }
-   catch(err) {
-
-        res.status(500).json(
-          {
-            status : "Failed" ,
-            error : err
-          }
-        )
-
-   }
-
-}
-
+export const rejectItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+    const invoice = await Invoice.findById(id);
+    if (!invoice) {
+      return res.status(404).json({ message: "Invoice not found" });
+    }
+    invoice.status = "rejected";
+    await invoice.save();
+    res.status(200).json({ message: "Invoice rejected successfully", invoice });
+  } catch (error) {
+    console.error("Error rejecting invoice:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
