@@ -17,6 +17,8 @@ const queueEvents = new QueueEvents("invoice", {
   },
 });
 
+
+
 const db = async () => {
   mongoose
     .connect(process.env.MONGO_URI)
@@ -28,6 +30,26 @@ const db = async () => {
     });
 };
 
+
+export const extractInvoiceDataGoogle = async (imagePath) => {
+  const base64Image = fs.readFileSync(imagePath, "base64");
+  const SYSTEM_PROMPT=``;
+  const contents = [
+  {
+    inlineData: {
+      mimeType: "image/jpeg",
+      data: base64Image,
+    },
+  },
+  { text: SYSTEM_PROMPT },
+];
+
+const response = await ai.models.generateContent({
+  model: "gemini-2.5-flash",
+  contents: contents,
+});
+  
+}
 export const extractInvoiceData = async (imagePath) => {
   const base64Image = fs.readFileSync(imagePath, "base64");
   const SYSTEM_PROMPT = `You are an AI Agent that can extract data from the Invoice image given and gives a JSON response in a particular format
