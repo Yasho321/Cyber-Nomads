@@ -452,7 +452,7 @@ return recipe;
   
 }
 
-export const extractInvoiceData = async (imagePath, invoiceData) => {
+export const extractInvoiceData = async (imagePath, suggestion) => {
   const base64Image = fs.readFileSync(imagePath, "base64");
   const SYSTEM_PROMPT = `
      You are an AI Agent that can extract data from the Invoice image given according to the suggestion given and gives a JSON response in a particular format
@@ -649,12 +649,15 @@ export const llmAsJudge = async (imagePath, invoiceData) => {
   const SYSTEM_PROMPT = `
   You are a judge and your task is to decide whether the invoiceData provided is correct extraction of the image
   or not and return Json format provided 
+  Be lineant , don't be too harsh give correctRetrieval false only when some value is wrong or may affect the accuracy
   You should return a bool value if the retrieval is correct or not 
   And also the suggestion if it is not an correct retrieval
   You should only give suggestion if the retrieval is not correct
   Otherwise you should give a placeholder suggestion "All Fine"
   Invoice Data Given:- 
   ${JSON.stringify(invoiceData)}
+  IMPORTANT:-
+  Don't be strict
   `;
   const response = await openai.responses.parse({
     model: "gpt-4.1-mini",
@@ -825,18 +828,24 @@ const worker = new Worker(
       }
       images.forEach(async (image) => {
         const invoiceData = await extractInvoiceDataGoogle(image);
+        console.log("invoice Data",JSON.stringify(invoiceData))
         const review = await llmAsJudge(image, invoiceData);
+         console.log("review",JSON.stringify(review))
         if(review.correctRetrieval){
           await updateInvoice(invoiceId, invoiceData);
         }else{
           const invoiceData2 = await extractInvoiceDataGoogle2(image , review.suggestion);
+           console.log("invoice Data2",JSON.stringify(invoiceData2))
           const review2 = await llmAsJudge(image, invoiceData2);
+           console.log("review 2",JSON.stringify(review2))
           if(review.correctRetrieval){
             await updateInvoice(invoiceId, invoiceData2);
           }else{
             const invoiceData3 = await extractInvoiceData(image , review2.suggestion);
-            const finalJudge = await finalJudge(image, invoiceData3, invoiceData);
-            await updateInvoice(invoiceId, finalJudge);
+             console.log("invoice Data3",JSON.stringify(invoiceData3))
+            const finalJudgeres = await finalJudge(image, invoiceData3, invoiceData);
+             console.log("final",JSON.stringify(finalJudgeres))
+            await updateInvoice(invoiceId, finalJudgeres);
           }
         }
         
