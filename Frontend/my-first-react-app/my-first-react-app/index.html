@@ -1,13 +1,351 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my-first-react-app</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InvoiceAI - Simplify Invoice Processing with AI</title>
+  <meta name="description" content="Transform your invoice workflow with intelligent AI-powered automation. Process faster, reduce errors, and gain valuable insights with InvoiceAI." />
+  <meta name="author" content="InvoiceAI" />
+
+  <meta property="og:title" content="InvoiceAI - AI-Powered Invoice Management" />
+  <meta property="og:description" content="Streamline your invoice processing with enterprise-grade AI automation. Join thousands of businesses using InvoiceAI." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@InvoiceAI" />
+  <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-background text-foreground transition-all duration-300">
+  <!-- Three.js Background -->
+  <div id="three-container" class="fixed inset-0 -z-10 pointer-events-none" style="opacity: 0.6;"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-fast">
+            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <span class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            InvoiceAI
+          </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-6">
+          <a href="index.html" class="text-foreground/80 hover:text-foreground transition-fast">Home</a>
+          <a href="#features" class="text-foreground/80 hover:text-foreground transition-fast">Features</a>
+          <a href="#testimonials" class="text-foreground/80 hover:text-foreground transition-fast">Testimonials</a>
+          <button id="theme-toggle" class="p-2 rounded-lg hover:bg-muted transition-fast" aria-label="Toggle theme">
+            <svg id="moon-icon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+            <svg id="sun-icon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </button>
+          <a href="login.html" class="px-4 py-2 rounded-lg hover:bg-muted transition-fast">Login</a>
+          <a href="signup.html" class="px-6 py-2 rounded-lg gradient-primary shadow-glow text-white font-medium">Get Started</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="flex items-center gap-2 md:hidden">
+          <button id="theme-toggle-mobile" class="p-2 rounded-lg hover:bg-muted transition-fast" aria-label="Toggle theme">
+            <svg id="moon-icon-mobile" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+            <svg id="sun-icon-mobile" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </button>
+          <button id="mobile-menu-btn" class="p-2 rounded-lg hover:bg-muted transition-fast">
+            <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg id="close-icon" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden py-4 border-t border-border animate-fade-in">
+        <div class="flex flex-col gap-4">
+          <a href="index.html" class="text-foreground/80 hover:text-foreground transition-fast py-2">Home</a>
+          <a href="#features" class="text-foreground/80 hover:text-foreground transition-fast py-2">Features</a>
+          <a href="#testimonials" class="text-foreground/80 hover:text-foreground transition-fast py-2">Testimonials</a>
+          <a href="login.html" class="px-4 py-2 rounded-lg hover:bg-muted transition-fast text-center">Login</a>
+          <a href="signup.html" class="px-6 py-2 rounded-lg gradient-primary shadow-glow text-white font-medium text-center">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto text-center">
+      <div class="animate-fade-in">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+          </svg>
+          <span class="text-sm font-medium">AI-Powered Invoice Management</span>
+        </div>
+        <h1 class="relative z-50 text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500 bg-clip-text text-transparent">
+  Simplify Invoice Processing with AI
+</h1>
+
+        <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          Transform your invoice workflow with intelligent automation. Process faster, reduce errors, and gain valuable insights.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="signup.html" class="px-8 py-3 rounded-lg gradient-primary shadow-glow text-white text-lg font-medium group inline-flex items-center gap-2">
+            Get Started Free
+            <svg class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+          <a href="login.html" class="px-8 py-3 rounded-lg border border-border hover:bg-muted text-lg font-medium transition-fast">
+            Sign In
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Powerful Features for Modern Teams</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Everything you need to streamline your invoice processing workflow
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Feature 1 -->
+        <div class="gradient-card rounded-lg border border-border/50 hover:shadow-xl transition-all duration-300 hover:scale-105 p-6">
+          <div class="p-3 rounded-lg bg-primary/10 w-fit mb-4">
+            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Lightning Fast Processing</h3>
+          <p class="text-muted-foreground">Process thousands of invoices in seconds with our AI-powered engine.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="gradient-card rounded-lg border border-border/50 hover:shadow-xl transition-all duration-300 hover:scale-105 p-6">
+          <div class="p-3 rounded-lg bg-primary/10 w-fit mb-4">
+            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Enterprise Security</h3>
+          <p class="text-muted-foreground">Bank-level encryption and compliance with industry standards.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="gradient-card rounded-lg border border-border/50 hover:shadow-xl transition-all duration-300 hover:scale-105 p-6">
+          <div class="p-3 rounded-lg bg-primary/10 w-fit mb-4">
+            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Advanced Analytics</h3>
+          <p class="text-muted-foreground">Get insights into spending patterns and vendor performance.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="gradient-card rounded-lg border border-border/50 hover:shadow-xl transition-all duration-300 hover:scale-105 p-6">
+          <div class="p-3 rounded-lg bg-primary/10 w-fit mb-4">
+            <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2">AI-Powered Extraction</h3>
+          <p class="text-muted-foreground">Automatically extract data with 99.9% accuracy using machine learning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-4xl md:text-5xl font-bold mb-6">Why Choose InvoiceAI?</h2>
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <svg class="h-6 w-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <p class="text-lg">Reduce processing time by up to 80%</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="h-6 w-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <p class="text-lg">Eliminate manual data entry errors</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="h-6 w-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <p class="text-lg">Seamless integration with your existing tools</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="h-6 w-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <p class="text-lg">Real-time collaboration and approval workflows</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="h-6 w-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <p class="text-lg">Comprehensive audit trail and compliance</p>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="gradient-card rounded-2xl p-8 shadow-xl flex items-center justify-center">
+            <svg class="h-48 w-48 text-primary/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Trusted by Finance Teams</h2>
+        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+          See what our customers have to say about InvoiceAI
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="gradient-card rounded-lg border border-border/50 hover:shadow-xl transition-all duration-300 p-6">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">SJ</div>
+            <div>
+              <p class="font-bold">Sarah Johnson</p>
+              <p class="text-sm text-muted-foreground">CFO at TechCorp</p>
+            </div>
+          </div>
+          <p class="text-muted-foreground italic">"InvoiceAI reduced our invoice processing time by 80%. It's a game-changer!"</p>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="gradient-card rounded-lg border border-border/50 hover:shadow-xl transition-all duration-300 p-6">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">MC</div>
+            <div>
+              <p class="font-bold">Michael Chen</p>
+              <p class="text-sm text-muted-foreground">Finance Director at GlobalRetail</p>
+            </div>
+          </div>
+          <p class="text-muted-foreground italic">"The accuracy and speed are unmatched. Our team loves using InvoiceAI."</p>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="gradient-card rounded-lg border border-border/50 hover:shadow-xl transition-all duration-300 p-6">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">ER</div>
+            <div>
+              <p class="font-bold">Emily Rodriguez</p>
+              <p class="text-sm text-muted-foreground">Operations Manager at StartupX</p>
+            </div>
+          </div>
+          <p class="text-muted-foreground italic">"Finally, a solution that scales with our business. Highly recommended!"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto">
+      <div class="gradient-primary rounded-lg text-white overflow-hidden relative p-12 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to Transform Your Invoice Process?</h2>
+        <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+          Join thousands of businesses already using InvoiceAI to streamline their operations
+        </p>
+        <a href="signup.html" class="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-white text-primary hover:bg-white/90 text-lg font-medium group transition-fast">
+          Start Free Trial
+          <svg class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 lg:px-8 border-t border-border">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <span class="text-xl font-bold">InvoiceAI</span>
+          </div>
+          <p class="text-muted-foreground">Simplify invoice processing with AI-powered automation.</p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Product</h4>
+          <ul class="space-y-2 text-muted-foreground">
+            <li><a href="#features" class="hover:text-foreground transition-fast">Features</a></li>
+            <li><a href="#" class="hover:text-foreground transition-fast">Pricing</a></li>
+            <li><a href="#" class="hover:text-foreground transition-fast">API</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Company</h4>
+          <ul class="space-y-2 text-muted-foreground">
+            <li><a href="#" class="hover:text-foreground transition-fast">About</a></li>
+            <li><a href="#" class="hover:text-foreground transition-fast">Blog</a></li>
+            <li><a href="#" class="hover:text-foreground transition-fast">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Legal</h4>
+          <ul class="space-y-2 text-muted-foreground">
+            <li><a href="#" class="hover:text-foreground transition-fast">Privacy</a></li>
+            <li><a href="#" class="hover:text-foreground transition-fast">Terms</a></li>
+            <li><a href="#" class="hover:text-foreground transition-fast">Security</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-border text-center text-muted-foreground">
+        <p>&copy; 2024 InvoiceAI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/three-background.js"></script>
+</body>
 </html>

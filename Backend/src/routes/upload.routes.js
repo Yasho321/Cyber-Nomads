@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { uploadMany } from "../utils/multer.js";
-import { uploadInvoice } from "../controllers/upload.controller.js";
-
+import { uploadInvoice , getAllUploads , getUploadById} from "../controllers/upload.controller.js";
+import { isLoggedIn } from "../middlewares/auth.middlewares.js";
 const router = Router();
-router.post("/", isLoggedIn, uploadMany, uploadInvoice);
+
+router.get("/" , getAllUploads)
+      .get("/:id" , getUploadById)
+      .post("/", isLoggedIn, uploadMany, uploadInvoice);
+
 export default router;

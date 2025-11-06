@@ -5,11 +5,21 @@ import {
   getInvoiceById,
   getRejectedInvoice,
   uploadInvoice,
+<<<<<<< HEAD
+  getUploadsForHumanReview, 
+=======
+  approveItem,
+  rejectItem
+>>>>>>> 94ae76a (Added approve and rejecteditems)
 } from "../controllers/invoice.controller.js";
 
-const router = Router();
+import {isLoggedIn} from './../middlewares/auth.middlewares.js'
 
+const router = Router();
+router.use(isLoggedIn)
 router.post("/", uploadMany, uploadInvoice);
+router.post("/accept/:id", approveItem);
+router.post("/reject/:id", rejectItem);
 
 router.get("/", getInvoices);
 router.get("/rejected", getRejectedInvoice);

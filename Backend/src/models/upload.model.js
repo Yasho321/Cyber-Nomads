@@ -6,6 +6,6 @@ const UploadSchema = new Schema({
   
 }, { timestamps: true });
 
-const Upload = mongoose.model('Upload', UploadSchema);
+const Upload = mongoose.model('Upload' , UploadSchema)
 
 export default Upload;

@@ -1,0 +1,120 @@
+/* InvoiceAI Custom Styles */
+
+:root {
+  --background: 210 20% 98%;
+  --foreground: 217 33% 17%;
+  --card: 0 0% 100%;
+  --card-foreground: 217 33% 17%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 217 33% 17%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 217 33% 17%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 217 20% 51%;
+  --accent: 199 89% 48%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 217 91% 60%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --card: 217 33% 17%;
+  --card-foreground: 210 40% 98%;
+  --popover: 217 33% 17%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 217 33% 21%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217 33% 21%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 199 89% 48%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 33% 21%;
+  --input: 217 33% 21%;
+  --ring: 217 91% 60%;
+}
+
+/* Tailwind Configuration */
+.bg-background { background-color: hsl(var(--background)); }
+.text-foreground { color: hsl(var(--foreground)); }
+.text-primary { color: hsl(var(--primary)); }
+.bg-primary { background-color: hsl(var(--primary)); }
+.text-muted-foreground { color: hsl(var(--muted-foreground)); }
+.bg-muted { background-color: hsl(var(--muted)); }
+.border-border { border-color: hsl(var(--border)); }
+.border-input { border-color: hsl(var(--input)); }
+.focus\:ring-ring:focus { --tw-ring-color: hsl(var(--ring)); }
+
+/* Gradients */
+.gradient-primary {
+  background: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(199, 89%, 48%));
+}
+
+.gradient-card {
+  background: linear-gradient(135deg, hsl(var(--card)), hsl(var(--muted)));
+}
+
+/* Shadows */
+.shadow-glow {
+  box-shadow: 0 0 40px hsl(217 91% 60% / 0.3);
+}
+
+.dark .shadow-glow {
+  box-shadow: 0 0 40px hsl(217 91% 60% / 0.4);
+}
+
+/* Transitions */
+.transition-fast {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-base {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* Toast Styles */
+#toast {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--card-foreground));
+}
+
+#toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#toast.success {
+  border-left: 4px solid hsl(var(--primary));
+}
+
+#toast.error {
+  border-left: 4px solid hsl(var(--destructive));
+}
