@@ -5,7 +5,7 @@ import { isLoggedIn } from "../middlewares/auth.middlewares.js";
 const router = Router();
 
 router.get("/" , getAllUploads)
-      .get("/:id" , getUploadById)
-      .post("/", isLoggedIn, uploadMany, uploadInvoice);
+router.get("/:id" , getUploadById)
+router.post("/", isLoggedIn, uploadMany, uploadInvoice);
 
 export default router;

@@ -5,7 +5,12 @@ import {
   getInvoiceById,
   getRejectedInvoice,
   uploadInvoice,
+
   getUploadsForHumanReview, 
+
+  approveItem,
+  rejectItem
+
 } from "../controllers/invoice.controller.js";
 
 import {isLoggedIn} from './../middlewares/auth.middlewares.js'
@@ -13,9 +18,11 @@ import {isLoggedIn} from './../middlewares/auth.middlewares.js'
 const router = Router();
 router.use(isLoggedIn)
 router.post("/", uploadMany, uploadInvoice);
+router.post("/accept/:id", approveItem);
+router.post("/reject/:id", rejectItem);
+
 router.get("/", getInvoices);
 router.get("/rejected", getRejectedInvoice);
 router.get("/:id", getInvoiceById);
-router.get('/humanreview' , getUploadsForHumanReview)
 
 export default router;
