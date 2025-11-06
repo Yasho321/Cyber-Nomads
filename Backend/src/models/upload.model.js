@@ -5,3 +5,7 @@ const UploadSchema = new Schema({
   invoiceId: [{ type: Schema.Types.ObjectId, ref: "Invoice"}],
   
 }, { timestamps: true });
+
+const Upload = mongoose.model('Upload', uploadSchema);
+
+export default Upload;
