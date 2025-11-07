@@ -116,7 +116,7 @@ export const approveItem = async (req, res) => {
     if (!item) {
       return res.status(404).json({ message: "Item not found" });
     }
-    item.status = "approved";
+    item.status = "processed";
     await item.save();
     res.status(200).json({ message: "Item approved successfully", item });
   } catch (error) {
@@ -128,9 +128,6 @@ export const approveItem = async (req, res) => {
 export const rejectItem = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid ID format" });
-    }
     const invoice = await Invoice.findById(id);
     if (!invoice) {
       return res.status(404).json({ message: "Invoice not found" });
@@ -178,11 +175,8 @@ export const exportAllInvoices = async (req, res) => {
 export const getInvoiceForHumanReview = async (req , res , next) => {
 
     try {
-    const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid ID format" });
-    }
-    const data = await Invoice.findById({"review.humanReviewNeeded" : true});
+
+    const data = await Invoice.find({"review.humanReviewNeeded" : true});
 
     res.status(200).json(
       {

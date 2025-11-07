@@ -21,7 +21,8 @@ router.post("/reject/:id", rejectItem);
 
 router.get("/", getInvoices);
 router.get("/rejected", getRejectedInvoice);
-router.get("/:id", getInvoiceById);
 router.get('/humanreview' , getInvoiceForHumanReview)
+router.get("/:id", getInvoiceById);
+
 
 export default router;

@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/" , getAllUploads)
 router.get("/:id" , getUploadById)
+router.get("/:id/export" , exportUpload)
 router.post("/", isLoggedIn, uploadMany, uploadInvoice);
 
 export default router;
